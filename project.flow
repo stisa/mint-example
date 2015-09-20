@@ -1,0 +1,26 @@
+{
+
+  project : {
+    name : 'mint example',
+    version : '0.0.1',
+    author : 'stisa',
+
+    app : {
+      name : 'mintexample',
+      package : 'it.stisa.mintexample'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+        mint : '*'
+      }
+    },
+
+    files : {
+      assets : 'assets/'
+    }
+
+  }
+
+}
