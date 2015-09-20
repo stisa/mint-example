@@ -3,7 +3,7 @@ import luxe.Color;
 import luxe.Vector;
 import luxe.Input;
 import luxe.Text;
-
+import mint.render.luxe.Convert;
 import mint.render.luxe.LuxeMintRender;
 import mint.layout.margins.Margins;
 
@@ -38,12 +38,25 @@ class Main extends luxe.Game {
         canvas.update(dt);
     } //update
 
+    override function onkeyup(e:luxe.Input.KeyEvent) {
+
+        if(e.keycode == Key.space) if(window1 != null) window1.open();
+    }
+
+    override function onmouseup(e) {
+        canvas.mouseup( Convert.mouse_event(e) );
+    }
+
+    override function onmousedown(e) {
+        canvas.mousedown( Convert.mouse_event(e) );
+    }
+
     function create_window1() {
 
         window1 = new mint.Window({
             parent: canvas,
             name: 'window1',
-            title: 'Titlebar',
+            title: 'Title',
             options: {
                 color:new Color().rgb(0x121212),
                 color_titlebar:new Color().rgb(0x191919),
