@@ -18,7 +18,7 @@ class Main extends luxe.Game {
 
     override function ready() {
 
-        Luxe.renderer.clear_color.rgb(0x121219);
+        Luxe.renderer.clear_color.rgb(0x6FFF6F);
 
         rendering = new LuxeMintRender();
         layout = new Margins();
