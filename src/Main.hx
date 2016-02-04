@@ -5,23 +5,23 @@ import luxe.Input;
 import luxe.Text;
 import mint.render.luxe.Convert;
 import mint.render.luxe.LuxeMintRender;
+import mint.focus.Focus;
 import mint.layout.margins.Margins;
 
 class Main extends luxe.Game {
 
-    static var canvas: mint.Canvas;
-    static var rendering: LuxeMintRender;
-    static var layout: Margins;
-
+    var canvas: mint.Canvas;
+    var rendering: LuxeMintRender;
+    var focus: Focus;
+    var layout: Margins;
     var window1: mint.Window;
     var label : mint.Label;
 
     override function ready() {
 
         Luxe.renderer.clear_color.rgb(0x6FFF6F);
-
-        rendering = new LuxeMintRender();
         layout = new Margins();
+        rendering = new LuxeMintRender();
 
         canvas = new mint.Canvas({
             name:'canvas',
@@ -29,29 +29,7 @@ class Main extends luxe.Game {
             options: { color:new Color(1,1,1,0.0) },
             x: 0, y:0, w: 960, h: 640
         });
-
-        create_window1();
-    } //ready
-
-    override function update(dt:Float) {
-
-        canvas.update(dt);
-    } //update
-
-    override function onkeyup(e:luxe.Input.KeyEvent) {
-
-        if(e.keycode == Key.space) if(window1 != null) window1.open();
-    }
-
-    override function onmouseup(e) {
-        canvas.mouseup( Convert.mouse_event(e) );
-    }
-
-    override function onmousedown(e) {
-        canvas.mousedown( Convert.mouse_event(e) );
-    }
-
-    function create_window1() {
+        focus = new Focus(canvas);
 
         window1 = new mint.Window({
             parent: canvas,
@@ -78,5 +56,50 @@ class Main extends luxe.Game {
            onclick: function(_,_) { trace('hello mint!'); }
        });
 
-    } //create_window1
+    } //ready
+
+    override function update(dt:Float) {
+        canvas.update(dt);
+    } //update
+
+    override function onrender() {
+        canvas.render();
+    } //onrender
+
+    override function onmousemove(e) {
+
+        canvas.mousemove( Convert.mouse_event(e) );
+
+    } //onmousemove
+
+    override function onmousewheel(e) {
+        canvas.mousewheel( Convert.mouse_event(e) );
+    }
+
+    override function onmouseup(e) {
+        canvas.mouseup( Convert.mouse_event(e) );
+    }
+
+    override function onmousedown(e) {
+        canvas.mousedown( Convert.mouse_event(e) );
+    }
+
+    override function onkeydown(e:luxe.Input.KeyEvent) {
+        canvas.keydown( Convert.key_event(e) );
+    }
+
+    override function ontextinput(e:luxe.Input.TextEvent) {
+        canvas.textinput( Convert.text_event(e) );
+    }
+
+    override function onkeyup(e:luxe.Input.KeyEvent) {
+
+        canvas.keyup( Convert.key_event(e) );
+
+        if(e.keycode == Key.escape) {
+            Luxe.shutdown();
+        }
+
+    } //onkeyup
+
 } //Main
